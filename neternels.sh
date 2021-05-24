@@ -193,8 +193,8 @@ _send_failed() {
     if [[ ${START_TIME} ]] && [[ ! $BUILD_TIME ]]; then
         END_TIME=$(TZ=${TIMEZONE} date +%s)
         BUILD_TIME=$((END_TIME - START_TIME))
-
         if [[ ${BUILD_STATUS} == True ]]; then
+
             _send_msg "<b>${CODENAME}-${LINUX_VERSION}</b> | \
 Build failed to compile after $((BUILD_TIME / 60)) minutes \
 and $((BUILD_TIME % 60)) seconds</code>"
@@ -440,18 +440,18 @@ perl -pe 's/\(http.*?\)//gs' | sed -e 's/  */ /g' -e 's/[[:space:]]*$//')
 
         PROTON)
             export KBUILD_COMPILER_STRING
-            export PATH=${TOOLCHAINS_DIR}/proton/bin\
-:${TOOLCHAINS_DIR}/proton/lib:/usr/bin:${PATH}
+            export PATH=\
+${TOOLCHAINS_DIR}/proton/bin:${TOOLCHAINS_DIR}/proton/lib:/usr/bin:${PATH}
             _check make -j"$(nproc ${CORES})" \
                 O="${OUT_DIR}" \
                 ARCH=arm64 \
                 SUBARCH=arm64 \
                 CROSS_COMPILE=aarch64-linux-gnu- \
-				CROSS_COMPILE_ARM32=arm-linux-gnueabi- \
-				CC=clang \
-				AR=llvm-ar \
-				OBJDUMP=llvm-objdump \
-				STRIP=llvm-strip \
+                CROSS_COMPILE_ARM32=arm-linux-gnueabi- \
+                CC=clang \
+                AR=llvm-ar \
+                OBJDUMP=llvm-objdump \
+                STRIP=llvm-strip \
                 LD=ld.lld \
                 LD_LIBRARY_PATH="${TOOLCHAINS_DIR}"/proton/lib
             ;;
@@ -488,17 +488,18 @@ ${TOOLCHAINS_DIR}/gcc64/bin:${TOOLCHAINS_DIR}/gcc32/bin:/usr/bin:${PATH}
             KBUILD_COMPILER_STRING=\
 $("${TOOLCHAINS_DIR}"/gcc64/bin/aarch64-elf-gcc --version | head -n 1)
             export KBUILD_COMPILER_STRING
-            export PATH=${TOOLCHAINS_DIR}/proton/lib:\
-${TOOLCHAINS_DIR}/gcc32/bin:${TOOLCHAINS_DIR}/gcc64/bin:/usr/bin/:${PATH}
+            export PATH=\
+${TOOLCHAINS_DIR}/gcc32/bin:${TOOLCHAINS_DIR}/gcc64/bin:\
+${TOOLCHAINS_DIR}/proton/lib:/usr/bin/:${PATH}
             _check make -j"$(nproc ${CORES})"  \
                 O="${OUT_DIR}" \
                 ARCH=arm64 \
                 SUBARCH=arm64 \
                 CROSS_COMPILE_ARM32=arm-eabi- \
-				CROSS_COMPILE=aarch64-elf- \
-				AR=aarch64-elf-ar \
-				OBJDUMP=aarch64-elf-objdump \
-				STRIP=aarch64-elf-strip \
+                CROSS_COMPILE=aarch64-elf- \
+                AR=aarch64-elf-ar \
+                OBJDUMP=aarch64-elf-objdump \
+                STRIP=aarch64-elf-strip \
                 LD=ld.lld \
                 LD_LIBRARY_PATH="${TOOLCHAINS_DIR}"/proton/lib
     esac
@@ -514,11 +515,11 @@ _create_flashable_zip() {
 <code>Started flashable zip creation</code>"
 
     # Move GZ-DTB to AnyKernel folder
-	_check cp "$OUT_DIR"/arch/arm64/boot/Image.gz-dtb \
+_check cp "$OUT_DIR"/arch/arm64/boot/Image.gz-dtb \
         "${COMPILER_DIR}"/AnyKernel/
 
     # CD to AnyKernel folder
-	cd "${COMPILER_DIR}"/AnyKernel || (_error "AnyKernel not found!"; _exit)
+cd "${COMPILER_DIR}"/AnyKernel || (_error "AnyKernel not found!"; _exit)
 
     # Create init.spectrum.rc
     if [[ -f ${KERNEL_DIR}/init.ElectroSpectrum.rc ]]; then
@@ -534,21 +535,21 @@ ${LINUX_VERSION}-${CODENAME}-NetErnels/g" init.spectrum.rc
     fi
 
     # Set anykernel.sh
-	_check sed -i "s/kernel.string=.*/kernel.string=\
+_check sed -i "s/kernel.string=.*/kernel.string=\
 NetErnels-${CODENAME}/g" anykernel.sh
-	_check sed -i \
+_check sed -i \
         "s/kernel.for=.*/kernel.for=${KERNEL_VARIANT}/g" anykernel.sh
-	_check sed -i \
+_check sed -i \
         "s/kernel.compiler=.*/kernel.compiler=${COMPILER}/g" anykernel.sh
-	_check sed -i "s/kernel.made=.*/kernel.made=${BUILDER}/g" anykernel.sh
-	_check sed -i "\
+_check sed -i "s/kernel.made=.*/kernel.made=${BUILDER}/g" anykernel.sh
+_check sed -i "\
         s/kernel.version=.*/kernel.version=$LINUX_VERSION/g" anykernel.sh
-	_check sed -i "s/message.word=.*/message.word=NetEnerls ~ \
+_check sed -i "s/message.word=.*/message.word=NetEnerls ~ \
 Development is Life ~ t.me\/neternels/g" anykernel.sh
-	_check sed -i "s/build.date=.*/build.date=$DATE/g" anykernel.sh
+_check sed -i "s/build.date=.*/build.date=$DATE/g" anykernel.sh
 
-	# Create flashable zip
-	_check zip -r9 NetErnels-"${CODENAME}"-"${LINUX_VERSION}"-"${DATE}".zip \
+# Create flashable zip
+_check zip -r9 NetErnels-"${CODENAME}"-"${LINUX_VERSION}"-"${DATE}".zip \
 ./* -x .git README.md ./*placeholder
     cd "${KERNEL_DIR}" || (_error "${KERNEL_DIR} not found!"; _exit)
 }
