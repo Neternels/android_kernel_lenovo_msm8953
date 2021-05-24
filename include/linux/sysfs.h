@@ -474,7 +474,7 @@ static inline void sysfs_notify_dirent(struct kernfs_node *kn)
 static inline struct kernfs_node *sysfs_get_dirent(struct kernfs_node *parent,
 						   const unsigned char *name)
 {
-	return kernfs_find_and_get(parent, name);
+	return kernfs_find_and_get(parent, *name);
 }
 
 static inline struct kernfs_node *sysfs_get(struct kernfs_node *kn)
