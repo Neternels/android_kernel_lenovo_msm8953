@@ -141,7 +141,7 @@ static __le16 ieee80211_duration(struct ieee80211_tx_data *tx,
 			rate = DIV_ROUND_UP(r->bitrate, 1 << shift);
 
 		switch (sband->band) {
-		case IEEE80211_BAND_2GHZ: {
+		case NL80211_BAND_2GHZ: {
 			u32 flag;
 			if (tx->sdata->flags & IEEE80211_SDATA_OPERATING_GMODE)
 				flag = IEEE80211_RATE_MANDATORY_G;
@@ -151,12 +151,12 @@ static __le16 ieee80211_duration(struct ieee80211_tx_data *tx,
 				mrate = r->bitrate;
 			break;
 		}
-		case IEEE80211_BAND_5GHZ:
+		case NL80211_BAND_5GHZ:
 			if (r->flags & IEEE80211_RATE_MANDATORY_A)
 				mrate = r->bitrate;
 			break;
-		case IEEE80211_BAND_60GHZ:
-			/* TODO, for now fall through */
+		/* case IEEE80211_BAND_60GHZ:
+			TODO, for now fall through */
 		case IEEE80211_NUM_BANDS:
 			WARN_ON(1);
 			break;

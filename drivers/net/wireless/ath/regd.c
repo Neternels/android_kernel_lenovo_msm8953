@@ -378,7 +378,7 @@ ath_reg_apply_ir_flags(struct wiphy *wiphy,
 {
 	struct ieee80211_supported_band *sband;
 
-	sband = wiphy->bands[IEEE80211_BAND_2GHZ];
+	sband = wiphy->bands[NL80211_BAND_2GHZ];
 	if (!sband)
 		return;
 
@@ -799,9 +799,9 @@ u32 ath_regd_get_band_ctl(struct ath_regulatory *reg,
 	}
 
 	switch (band) {
-	case IEEE80211_BAND_2GHZ:
+	case NL80211_BAND_2GHZ:
 		return reg->regpair->reg_2ghz_ctl;
-	case IEEE80211_BAND_5GHZ:
+	case NL80211_BAND_5GHZ:
 		return reg->regpair->reg_5ghz_ctl;
 	default:
 		return NO_CTL;
