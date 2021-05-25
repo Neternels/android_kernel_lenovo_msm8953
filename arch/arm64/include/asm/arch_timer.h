@@ -102,7 +102,7 @@ static inline u32 arch_timer_get_cntkctl(void)
 
 static inline void arch_timer_set_cntkctl(u32 cntkctl)
 {
-	asm volatile("msr	cntkctl_el1, %w0" : : "r" (cntkctl));
+	asm volatile("msr	cntkctl_el1, %0" : : "r" (cntkctl));
 }
 
 static inline u64 arch_counter_get_cntvct_cp15(void)
