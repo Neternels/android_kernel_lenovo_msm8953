@@ -451,9 +451,9 @@ ${TOOLCHAINS_DIR}/proton/bin:${TOOLCHAINS_DIR}/proton/lib:/usr/bin:${PATH}
                 CC=clang \
                 AR=llvm-ar \
                 OBJDUMP=llvm-objdump \
-                STRIP=llvm-strip \
-                LD=ld.lld \
-                LD_LIBRARY_PATH="${TOOLCHAINS_DIR}"/proton/lib
+                STRIP=llvm-strip
+                #LD=ld.lld \
+                #LD_LIBRARY_PATH="${TOOLCHAINS_DIR}"/proton/lib
             ;;
 
         PROTONxGCC)
@@ -479,9 +479,9 @@ ${TOOLCHAINS_DIR}/gcc64/bin:${TOOLCHAINS_DIR}/gcc32/bin:/usr/bin:${PATH}
                 HOSTCC=clang \
                 HOSTCXX=clang++ \
                 HOSTAR=llvm-ar \
-                CLANG_TRIPLE=aarch64-linux-gnu- \
-                LD=ld.lld \
-                LD_LIBRARY_PATH="${TOOLCHAINS_DIR}"/proton/lib
+                CLANG_TRIPLE=aarch64-linux-gnu-
+                #LD=ld.lld \
+                #LD_LIBRARY_PATH="${TOOLCHAINS_DIR}"/proton/lib
             ;;
 
         GCC)
@@ -499,9 +499,9 @@ ${TOOLCHAINS_DIR}/proton/lib:/usr/bin/:${PATH}
                 CROSS_COMPILE=aarch64-elf- \
                 AR=aarch64-elf-ar \
                 OBJDUMP=aarch64-elf-objdump \
-                STRIP=aarch64-elf-strip \
-                LD=ld.lld \
-                LD_LIBRARY_PATH="${TOOLCHAINS_DIR}"/proton/lib
+                STRIP=aarch64-elf-strip
+                #LD=ld.lld \
+                #LD_LIBRARY_PATH="${TOOLCHAINS_DIR}"/proton/lib
     esac
 }
 
@@ -627,8 +627,8 @@ esac
 # Build status
 END_TIME=$(TZ=${TIMEZONE} date +%s)
 BUILD_TIME=$((END_TIME - START_TIME))
-_note "Successfully compiled \
-NetErnels-${CODENAME}-${LINUX_VERSION}-${DATE}-signed.zip"
+_note "Successfully compiled NetErnels-${CODENAME}-${LINUX_VERSION} \
+after $((BUILD_TIME / 60)) minutes and $((BUILD_TIME % 60)) seconds"
 
 # Send build status to Telegram
 if [[ ${BUILD_STATUS} == True ]]; then
