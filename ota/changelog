@@ -10,7 +10,7 @@ Build Number: 1.0
 ## Changelog
 ```
 -1.0:
-    Linux Stable v4.18.140
+    Linux Stable v3.18.140
     CAF-TAG LA.UM.8.6.c26-03500-89xx.0
     Wifi Injection Patch v2-2-6-mac80211
     Compiled with Proton Clang version 13.0.0
