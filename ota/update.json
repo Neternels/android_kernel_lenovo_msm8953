@@ -1,0 +1,13 @@
+{
+  "kernel": {
+    "name": "NetErnels Kernel",
+    "version": "NetErnels-v1.0",
+    "link": "https://github.com/Neternels/android_kernel_lenovo_msm8953/releases/download/v1.0/NetErnels-X304L-3.18.140-2021-05-26-signed.zip",
+    "changelog_url": "https://raw.githubusercontent.com/Neternels/android_kernel_lenovo_msm8953/main/ota/changelog",
+    "date": "2021-05-26",
+    "sha1": "0a693699abe28e0ee28fa2d9a72bb547c74ec929"
+  },
+  "support": {
+    "link": "https://t.me/neternels_chat"
+  }
+}
